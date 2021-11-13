@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: ${ingress_class}
+  name: kibana
+  namespace: ${namespace}
+spec:
+  rules:
+    - host: ${kibana_host}
+      http:
+        paths:
+          - backend:
+              service:
+                name: ${kibana_service}
+                port:
+                  number: ${kibana_port}
+            path: /
+            pathType: Prefix

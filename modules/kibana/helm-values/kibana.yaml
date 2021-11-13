@@ -1,0 +1,18 @@
+elasticsearchHosts: "https://${elasticsearch_address}"
+
+replicas: 1
+
+# Allows you to load environment variables from kubernetes secret or config map
+envFrom:
+  - secretRef:
+      name: ${elasticsearch_master_user_secret}
+
+image: "docker.elastic.co/kibana/kibana-oss"
+
+# Allows you to add any config files in /usr/share/kibana/config/
+# such as kibana.yml
+kibanaConfig:
+  kibana.yml: |
+    elasticsearch:
+      username: $${ELASTICSEARCH_USERNAME}
+      password: $${ELASTICSEARCH_PASSWORD}

@@ -1,0 +1,28 @@
+image:
+  repository: quay.io/prometheuscommunity/elasticsearch-exporter
+  tag: v1.3.0
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
+## The name of a secret in the same kubernetes namespace which contain values to be added to the environment
+## This can be useful for auth tokens, etc
+envFromSecret: "${elasticsearch_master_user_secret}"
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9108"
+
+es:
+  ## Address (host and port) of the Elasticsearch node we should connect to.
+  ## This could be a local node (localhost:9200, for instance), or the address
+  ## of a remote Elasticsearch server. When basic auth is needed,
+  ## specify as: <proto>://<user>:<password>@<host>:<port>. e.g., http://admin:pass@localhost:9200.
+  ##
+  uri: https://${elasticsearch_address}

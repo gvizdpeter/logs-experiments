@@ -1,0 +1,59 @@
+replicas: 3
+
+image: "docker.elastic.co/logstash/logstash-oss"
+
+logstashPipeline:
+  logstash.conf: |
+    input {
+      beats {
+        port => ${beats_port}
+      }
+    }
+    filter {
+      if ![kubernetes][labels][logstash-collect] or [kubernetes][labels][logstash-collect] != "true" {
+        drop { }
+      }
+      grok {
+        match => { "message" => "%%{COMMONAPACHELOG}" }
+      }
+      ruby {
+        init => "require 'socket'"
+        code => "event.set('logstash.hostname', Socket.gethostname)"
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => "https://${elasticsearch_address}:443"
+        manage_template => false
+        index => "logstash-%%{+YYYY.MM.dd}"
+        user => "$${ELASTICSEARCH_USERNAME}"
+        password => "$${ELASTICSEARCH_PASSWORD}"
+        ilm_enabled => false
+      }
+    }
+
+persistence:
+  enabled: false
+
+envFrom:
+  - secretRef:
+      name: ${elasticsearch_master_user_secret}
+
+# By default this will make sure two pods don't end up on the same node
+# Changing this to a region would allow you to spread pods across regions
+antiAffinityTopologyKey: "kubernetes.io/hostname"
+
+# Hard means that by default pods will only be scheduled if there are enough nodes for them
+# and that they will never end up on the same node. Setting this to soft will do this "best effort"
+antiAffinity: "soft"
+
+service:
+  type: ClusterIP
+  ports:
+    - name: beats
+      port: ${beats_port}
+      protocol: TCP
+      targetPort: ${beats_port}
+
+ingress:
+  enabled: false

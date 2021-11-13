@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vegeta
+  namespace: apache
+  labels:
+    app: vegeta
+spec:
+  replicas: ${stress_replicas}
+  selector:
+    matchLabels:
+      app: vegeta
+  template:
+    metadata:
+      labels:
+        app: vegeta
+    spec:
+      containers:
+        - name: vegeta-200
+          image: peterevans/vegeta:6.9.1
+          command:
+            - /bin/sh
+            - -c
+            - "while true; do echo 'GET http://apache' | vegeta attack -rate=$(tr -cd 0-9 </dev/urandom | head -c 2) -duration=30s | vegeta report; done"
+        - name: vegeta-404
+          image: peterevans/vegeta:6.9.1
+          command:
+            - /bin/sh
+            - -c
+            - "while true; do echo 'GET http://apache/test' | vegeta attack -rate=$(tr -cd 0-9 </dev/urandom | head -c 1) -duration=30s | vegeta report; done"

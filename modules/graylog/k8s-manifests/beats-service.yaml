@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${service_name}
+  namespace: ${namespace}
+spec:
+  clusterIP: None
+  ports:
+    - name: beats
+      port: ${beats_port}
+      protocol: TCP
+      targetPort: ${beats_port}
+  selector:
+    statefulset.kubernetes.io/pod-name: graylog-${index}
+    app.kubernetes.io/name: graylog
+  type: ClusterIP

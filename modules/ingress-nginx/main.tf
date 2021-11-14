@@ -8,14 +8,14 @@ resource "helm_release" "ingress_nginx" {
   recreate_pods    = true
 
   values = [
-    templatefile("${path.module}/helm-values/ingress-nginx.yaml", {
+    templatefile("${path.module}/helm-values/ingress-nginx.yamlx", {
       ingess_class_name     = var.ingress_class_name
-      logstash_namespace    = var.logstash_namespace
+      /*logstash_namespace    = var.logstash_namespace
       logstash_service_name = var.logstash_service_name
       logstash_beats_port   = var.logstash_beats_port
       graylog_namespace     = var.graylog_namespace
       graylog_service_name  = var.graylog_service_name
-      graylog_beats_port    = var.graylog_beats_port
+      graylog_beats_port    = var.graylog_beats_port*/
     })
   ]
 }

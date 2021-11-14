@@ -1,0 +1,34 @@
+controller:
+  admissionWebhooks:
+    enabled: true
+
+  metrics:
+    enabled: true
+
+  service:
+    ports:
+      http: 80
+      https: 443
+
+    targetPorts:
+      http: http
+      https: http
+
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+      service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+      service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "name=eks-ingress-lb"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-2:671639597365:certificate/949f512e-d5be-4e5e-af4d-eb49f761afa4"
+      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+
+  ingressClassResource:
+    name: ${ingess_class_name}
+    enabled: true
+    default: true
+    controllerValue: "k8s.io/ingress-nginx"
+
+#tcp:
+#  {logstash_beats_port}: "{logstash_namespace}/{logstash_service_name}:{logstash_beats_port}"
+#  {graylog_beats_port}: "{graylog_namespace}/{graylog_service_name}:{graylog_beats_port}"

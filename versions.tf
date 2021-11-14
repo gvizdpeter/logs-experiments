@@ -26,5 +26,21 @@ terraform {
       source  = "terraform-provider-graylog/graylog"
       version = "~> 1.0.4"
     }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.1.0"
+    }
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = "~> 2.2.0"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.1.0"
+    }
+    http = {
+      source  = "terraform-aws-modules/http"
+      version = "~> 2.4.0"
+    }
   }
 }

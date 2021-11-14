@@ -1,0 +1,8 @@
+eni:
+  enabled: true
+ipam:
+  mode: eni
+egressMasqueradeInterfaces: eth0
+tunnel: disabled
+nodeinit:
+  enabled: true

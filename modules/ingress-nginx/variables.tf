@@ -6,11 +6,11 @@ variable "config_path" {
   type = string
 }
 
-variable "config_context" {
+variable "ingress_class_name" {
   type = string
 }
 
-variable "ingress_class_name" {
+/*variable "acm_certificate_arn" {
   type = string
 }
 
@@ -36,4 +36,4 @@ variable "graylog_service_name" {
 
 variable "graylog_beats_port" {
   type = number
-}
+}*/

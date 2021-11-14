@@ -2,18 +2,6 @@ variable "aws_tags" {
   type = map(string)
 }
 
-variable "elasticsearch_host" {
-  type = string
-}
-
-variable "zone_id" {
-  type = string
-}
-
-variable "acm_certificate_arn" {
-  type = string
-}
-
 variable "instance_type" {
   type    = string
   default = "t3.small.elasticsearch"
@@ -42,5 +30,17 @@ variable "config_path" {
 }
 
 variable "config_context" {
+  type = string
+}
+
+variable "client_security_group_id" {
+  type = string
+}
+
+variable "subnets" {
+  type = list(string)
+}
+
+variable "vpc_id" {
   type = string
 }

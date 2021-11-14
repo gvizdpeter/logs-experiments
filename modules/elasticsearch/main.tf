@@ -22,6 +22,19 @@ resource "aws_secretsmanager_secret_version" "elasticsearch_master_user" {
   })
 }
 
+resource "aws_security_group" "elasticsearch_security_group" {
+  name        = "elasticsearch-security-group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+
+    security_groups = [var.client_security_group_id]
+  }
+}
+
 resource "aws_elasticsearch_domain" "logs" {
   domain_name           = var.domain_name
   elasticsearch_version = var.elasticsearch_version
@@ -38,6 +51,11 @@ resource "aws_elasticsearch_domain" "logs" {
 
     instance_count = var.instance_count
     instance_type  = var.instance_type
+  }
+
+  vpc_options {
+    subnet_ids = var.subnets
+    security_group_ids = [aws_security_group.elasticsearch_security_group.id]
   }
 
   ebs_options {
@@ -65,21 +83,9 @@ resource "aws_elasticsearch_domain" "logs" {
   domain_endpoint_options {
     enforce_https       = true
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
-
-    custom_endpoint_enabled         = true
-    custom_endpoint_certificate_arn = var.acm_certificate_arn
-    custom_endpoint                 = var.elasticsearch_host
   }
 
   tags = var.aws_tags
-}
-
-resource "aws_route53_record" "elasticsearch_cname_record" {
-  zone_id = var.zone_id
-  name    = var.elasticsearch_host
-  type    = "CNAME"
-  ttl     = "300"
-  records = [aws_elasticsearch_domain.logs.endpoint]
 }
 
 resource "kubernetes_namespace" "elasticsearch_exporter" {

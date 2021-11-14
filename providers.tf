@@ -1,18 +1,21 @@
 provider "helm" {
   kubernetes {
-    config_path    = local.config_path
-    config_context = local.config_context
+    config_path    = "~/.kube/config.minikube"
+    config_context = "minikube"
+    #config_path    = local.eks_config_path
   }
 }
 
 provider "kubernetes" {
-  config_path    = local.config_path
-  config_context = local.config_context
+  config_path    = "~/.kube/config.minikube"
+  config_context = "minikube"
+  #config_path    = local.eks_config_path
 }
 
 provider "kubectl" {
-  config_path    = local.config_path
-  config_context = local.config_context
+  config_path    = "~/.kube/config.minikube"
+  config_context = "minikube"
+  #config_path    = local.eks_config_path
 }
 
 provider "aws" {

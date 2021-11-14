@@ -12,14 +12,14 @@ module "filebeat" {
 }
 
 module "elasticsearch" {
-  source              = "./modules/elasticsearch"
-  acm_certificate_arn = module.wildcard_cert.acm_certificate_arn
-  aws_tags            = local.aws_tags
-  domain_name         = "logs"
-  elasticsearch_host  = "elastic.${local.domain}"
-  zone_id             = data.aws_route53_zone.primary.zone_id
-  config_context      = local.config_context
-  config_path         = local.config_path
+  source                   = "./modules/elasticsearch"
+  aws_tags                 = local.aws_tags
+  domain_name              = "logs"
+  config_context           = local.config_context
+  config_path              = local.config_path
+  vpc_id                   = module.primary_vpc.vpc_id
+  subnets                  = module.primary_vpc.private_subnets
+  client_security_group_id = module.eks.cluster_primary_security_group_id
 }
 
 module "logstash" {

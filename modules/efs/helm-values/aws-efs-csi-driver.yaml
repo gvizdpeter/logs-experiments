@@ -1,5 +1,5 @@
 storageClasses:
-  - name: efs-sc
+  - name: ${storage_class_name}
     parameters:
       provisioningMode: efs-ap
       directoryPerms: "700"

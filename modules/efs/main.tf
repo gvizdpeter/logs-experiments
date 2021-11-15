@@ -2,11 +2,11 @@ resource "aws_iam_policy" "efs_csi_controller_policy" {
   name = "EFSCSIControllerIAMPolicy"
   path = "/"
 
-  policy = jsonencode(file("${path.module}/aws/iam_policy.json"))
+  policy = file("${path.module}/aws/iam_policy.json")
 }
 
 resource "aws_iam_role_policy_attachment" "eks_cluster_efs_csi_controller_policy_attachment" {
-  role       = var.worker_iam_role_name
+  role       = var.client_iam_role_name
   policy_arn = aws_iam_policy.efs_csi_controller_policy.arn
 }
 
@@ -43,13 +43,14 @@ resource "helm_release" "aws_efs_csi_driver" {
   chart         = "aws-efs-csi-driver"
   repository    = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
   name          = "aws-efs-csi-driver"
-  version       = "2.2.0"
+  version       = var.chart_version
   recreate_pods = true
-  namespace     = "kube-system"
+  namespace     = var.namespace
 
   values = [
     templatefile("${path.module}/helm-values/aws-efs-csi-driver.yaml", {
-      efs_id = aws_efs_file_system.eks_efs.id
+      efs_id             = aws_efs_file_system.eks_efs.id
+      storage_class_name = var.storage_class_name
     })
   ]
 }

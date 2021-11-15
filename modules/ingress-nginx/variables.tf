@@ -2,15 +2,11 @@ variable "namespace" {
   type = string
 }
 
-variable "config_path" {
-  type = string
-}
-
 variable "ingress_class_name" {
   type = string
 }
 
-/*variable "acm_certificate_arn" {
+variable "acm_certificate_arn" {
   type = string
 }
 
@@ -36,4 +32,17 @@ variable "graylog_service_name" {
 
 variable "graylog_beats_port" {
   type = number
-}*/
+}
+
+variable "zone_id" {
+  type = string
+}
+
+variable "zone_name" {
+  type = string
+}
+
+variable "chart_version" {
+  type    = string
+  default = "4.0.3"
+}

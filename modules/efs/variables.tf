@@ -1,4 +1,4 @@
-variable "worker_iam_role_name" {
+variable "client_iam_role_name" {
   type = string
 }
 
@@ -18,6 +18,15 @@ variable "vpc_id" {
   type = string
 }
 
-variable "config_path" {
+variable "storage_class_name" {
+  type = string
+}
+
+variable "chart_version" {
+  type    = string
+  default = "2.2.0"
+}
+
+variable "namespace" {
   type = string
 }

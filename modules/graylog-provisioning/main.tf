@@ -5,10 +5,10 @@ resource "graylog_input" "beats" {
 
   attributes = jsonencode({
     bind_address          = "0.0.0.0"
-    port                  = 5045
+    port                  = var.beats_port
     recv_buffer_size      = 1048576
     no_beats_prefix       = true
-    number_worker_threads = 3
+    number_worker_threads = var.graylog_replicas
     tcp_keepalive         = false
     tls_client_auth       = "disabled"
     tls_enable            = false

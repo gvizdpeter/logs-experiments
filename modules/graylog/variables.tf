@@ -1,4 +1,4 @@
-variable "nfs_storage_class" {
+variable "storage_class" {
   type = string
 }
 
@@ -28,10 +28,12 @@ variable "namespace" {
   type = string
 }
 
-variable "config_path" {
-  type = string
+variable "chart_version" {
+  type    = string
+  default = "2.2.0"
 }
 
-variable "config_context" {
-  type = string
+variable "graylog_replicas" {
+  type    = number
+  default = 3
 }

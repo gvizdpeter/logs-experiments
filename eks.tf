@@ -42,15 +42,9 @@ resource "null_resource" "delete_aws_cni" {
   }
 }
 
-resource "helm_release" "cilium" {
-  chart         = "cilium"
-  repository    = "https://helm.cilium.io/"
-  name          = "cilium"
-  version       = "1.10.5"
-  recreate_pods = true
-  namespace     = "kube-system"
-
-  values = [file("${path.module}/helm-values/cilium.yaml")]
+module "cilium" {
+  source    = "./modules/cilium"
+  namespace = "kube-system"
 
   depends_on = [
     null_resource.delete_aws_cni,

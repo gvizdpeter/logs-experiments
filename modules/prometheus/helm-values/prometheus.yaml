@@ -28,7 +28,7 @@ server:
 
   extraFlags:
     - web.enable-lifecycle
-    - storage.tsdb.retention.size=${storage_size_in_gb}GB
+    - storage.tsdb.retention.size=${storage_size_in_gi}GB
 
   ingress:
     ## If true, Prometheus server Ingress will be created
@@ -61,7 +61,7 @@ server:
 
     ## Prometheus server data Persistent Volume size
     ##
-    size: ${storage_size_in_gb}Gi
+    size: ${storage_size_in_gi}Gi
 
     ## Prometheus server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -70,7 +70,7 @@ server:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: "${nfs_storage_class_name}"
+    storageClass: "${storage_class}"
 
   statefulSet:
     ## If true, use a statefulset instead of a deployment for pod management.

@@ -20,7 +20,7 @@ resource "helm_release" "kibana" {
   name          = "kibana"
   repository    = "https://helm.elastic.co"
   chart         = "kibana"
-  version       = "7.10.2"
+  version       = var.chart_version
   namespace     = kubernetes_namespace.kibana.metadata[0].name
   recreate_pods = true
 

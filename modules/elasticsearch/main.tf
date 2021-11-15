@@ -23,8 +23,8 @@ resource "aws_secretsmanager_secret_version" "elasticsearch_master_user" {
 }
 
 resource "aws_security_group" "elasticsearch_security_group" {
-  name        = "elasticsearch-security-group"
-  vpc_id      = var.vpc_id
+  name   = "elasticsearch-security-group"
+  vpc_id = var.vpc_id
 
   ingress {
     from_port = 443
@@ -54,7 +54,7 @@ resource "aws_elasticsearch_domain" "logs" {
   }
 
   vpc_options {
-    subnet_ids = var.subnets
+    subnet_ids         = var.subnets
     security_group_ids = [aws_security_group.elasticsearch_security_group.id]
   }
 
@@ -110,7 +110,7 @@ resource "helm_release" "elasticsearch_exporter" {
   name          = "elasticsearch-exporter"
   repository    = "https://prometheus-community.github.io/helm-charts"
   chart         = "prometheus-elasticsearch-exporter"
-  version       = "4.7.0"
+  version       = var.elasticsearch_exporter_chart_version
   namespace     = kubernetes_namespace.elasticsearch_exporter.metadata[0].name
   recreate_pods = true
 

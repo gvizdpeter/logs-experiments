@@ -25,14 +25,6 @@ variable "domain_name" {
   type = string
 }
 
-variable "config_path" {
-  type = string
-}
-
-variable "config_context" {
-  type = string
-}
-
 variable "client_security_group_id" {
   type = string
 }
@@ -43,4 +35,9 @@ variable "subnets" {
 
 variable "vpc_id" {
   type = string
+}
+
+variable "elasticsearch_exporter_chart_version" {
+  type    = string
+  default = "4.7.0"
 }

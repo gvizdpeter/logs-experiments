@@ -3,14 +3,16 @@ output "elasticsearch_address" {
 }
 
 output "elasticsearch_username" {
-  value = random_password.elasticsearch_master_password.keepers["username"]
+  value     = random_password.elasticsearch_master_password.keepers["username"]
+  sensitive = true
   depends_on = [
     aws_elasticsearch_domain.logs,
   ]
 }
 
 output "elasticsearch_password" {
-  value = random_password.elasticsearch_master_password.result
+  value     = random_password.elasticsearch_master_password.result
+  sensitive = true
   depends_on = [
     aws_elasticsearch_domain.logs,
   ]

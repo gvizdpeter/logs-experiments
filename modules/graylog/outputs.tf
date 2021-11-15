@@ -31,14 +31,23 @@ output "graylog_host" {
 }
 
 output "graylog_root_username" {
-  value = random_password.graylog_root_password.keepers["username"]
+  value     = random_password.graylog_root_password.keepers["username"]
+  sensitive = true
   depends_on = [
     helm_release.graylog,
   ]
 }
 
 output "graylog_root_password" {
-  value = random_password.graylog_root_password.result
+  value     = random_password.graylog_root_password.result
+  sensitive = true
+  depends_on = [
+    helm_release.graylog,
+  ]
+}
+
+output "graylog_replicas" {
+  value = var.graylog_replicas
   depends_on = [
     helm_release.graylog,
   ]

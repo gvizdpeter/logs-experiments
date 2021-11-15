@@ -5,7 +5,7 @@ tags:
   install-mongodb: true
 
 graylog:
-  replicas: ${cluster_size}
+  replicas: ${graylog_replicas}
 
   service:
     ## Add additional ports for the service/statefulset to expose
@@ -53,7 +53,7 @@ graylog:
     accessMode: ReadWriteOnce
     ## Graylog data Persistent Volume size
     ##
-    size: "${storage_size_gb}Gi"
+    size: "${graylog_storage_size_gi}Gi"
     ## Graylog data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -61,7 +61,7 @@ graylog:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: "${nfs_storage_class}"
+    storageClass: "${storage_class}"
 
   ## Additional input ports for receiving logs from servers
   ## Note: Name must be in IANA_SVC_NAME (at most 15 characters, matching regex [a-z0-9]([a-z0-9-]*[a-z0-9])* and it must contains at least one letter [a-z], hyphens cannot be adjacent to other hyphens)
@@ -138,7 +138,7 @@ mongodb:
     enabled: false
   persistence:
     enabled: true
-    storageClass: "${nfs_storage_class}"
+    storageClass: "${storage_class}"
     accessModes:
       - ReadWriteOnce
-    size: 1Gi
+    size: ${mongo_db_storage_size_gi}Gi

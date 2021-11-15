@@ -20,7 +20,7 @@ resource "helm_release" "logstash" {
   name          = "logstash"
   repository    = "https://helm.elastic.co"
   chart         = "logstash"
-  version       = "7.10.2"
+  version       = var.chart_version
   namespace     = kubernetes_namespace.logstash.metadata[0].name
   recreate_pods = true
 

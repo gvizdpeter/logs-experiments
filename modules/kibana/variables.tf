@@ -24,10 +24,7 @@ variable "namespace" {
   type = string
 }
 
-variable "config_path" {
-  type = string
-}
-
-variable "config_context" {
-  type = string
+variable "chart_version" {
+  type    = string
+  default = "7.10.2"
 }

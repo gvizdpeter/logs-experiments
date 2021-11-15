@@ -60,7 +60,7 @@ resource "helm_release" "graylog" {
   name          = "graylog"
   repository    = "https://charts.kong-z.com"
   chart         = "graylog"
-  version       = "1.8.10"
+  version       = var.chart_version
   namespace     = kubernetes_namespace.graylog.metadata[0].name
   recreate_pods = true
   timeout       = 600
@@ -68,8 +68,8 @@ resource "helm_release" "graylog" {
   values = [
     templatefile("${path.module}/helm-values/graylog.yaml", {
       elasticsearch_address        = var.elasticsearch_address
-      storage_size_gb              = 20
-      nfs_storage_class            = var.nfs_storage_class
+      graylog_storage_size_gi      = 20
+      storage_class                = var.storage_class
       beats_port                   = local.beats_port
       graylog_host                 = var.graylog_host
       ingress_class                = var.ingress_class
@@ -79,13 +79,14 @@ resource "helm_release" "graylog" {
       root_username                = random_password.graylog_root_password.keepers["username"]
       graylog_root_password_secret = kubernetes_secret.graylog_root_password.metadata[0].name
       gryalog_beats_service_name   = local.gryalog_beats_service_name
-      cluster_size                 = local.cluster_size
+      graylog_replicas             = var.graylog_replicas
+      mongo_db_storage_size_gi     = 1
     })
   ]
 }
 
 resource "kubectl_manifest" "graylog_beats_service" {
-  count = local.cluster_size
+  count = var.graylog_replicas
 
   yaml_body = templatefile("${path.module}/k8s-manifests/beats-service.yaml", {
     service_name = local.graylog_beats_services[count.index]

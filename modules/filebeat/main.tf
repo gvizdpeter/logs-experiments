@@ -2,7 +2,7 @@ resource "helm_release" "filebeat" {
   name             = "filebeat"
   repository       = "https://helm.elastic.co"
   chart            = "filebeat"
-  version          = "7.10.2"
+  version          = var.chart_version
   namespace        = var.namespace
   recreate_pods    = true
   create_namespace = true

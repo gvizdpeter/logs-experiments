@@ -20,3 +20,7 @@ variable "api_version" {
 variable "beats_port" {
   type = number
 }
+
+variable "graylog_replicas" {
+  type = number
+}

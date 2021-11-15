@@ -3,7 +3,7 @@ module "eks" {
   version = "~> 17.23.0"
 
   cluster_version = "1.21"
-  cluster_name    = "elk"
+  cluster_name    = local.eks_name
   vpc_id          = module.primary_vpc.vpc_id
   subnets         = module.primary_vpc.private_subnets
 

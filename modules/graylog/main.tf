@@ -68,7 +68,6 @@ resource "helm_release" "graylog" {
   values = [
     templatefile("${path.module}/helm-values/graylog.yaml", {
       elasticsearch_address        = var.elasticsearch_address
-      graylog_storage_size_gi      = 20
       storage_class                = var.storage_class
       beats_port                   = local.beats_port
       graylog_host                 = var.graylog_host

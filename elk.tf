@@ -16,6 +16,8 @@ module "elasticsearch" {
   vpc_id                   = module.primary_vpc.vpc_id
   subnets                  = module.primary_vpc.private_subnets
   client_security_group_id = module.eks.cluster_primary_security_group_id
+  aws_region               = data.aws_region.current.name
+  account_id               = data.aws_caller_identity.current.account_id
 }
 
 module "logstash" {
@@ -29,7 +31,7 @@ module "logstash" {
 module "kibana" {
   source = "./modules/kibana"
 
-  kibana_host            = "kibana.${local.domain}"
+  kibana_host            = "kibana.${data.aws_route53_zone.primary.name}"
   ingress_class          = module.ingress_nginx.ingress_class
   elasticsearch_address  = module.elasticsearch.elasticsearch_address
   elasticsearch_username = module.elasticsearch.elasticsearch_username

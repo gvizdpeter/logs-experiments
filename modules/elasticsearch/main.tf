@@ -39,7 +39,11 @@ resource "aws_elasticsearch_domain" "logs" {
   domain_name           = var.domain_name
   elasticsearch_version = var.elasticsearch_version
 
-  access_policies = file("${path.module}/aws/access-policy.json")
+  access_policies = templatefile("${path.module}/aws/access-policy.json", {
+    domain     = var.domain_name
+    aws_region = var.aws_region
+    account_id = var.account_id
+  })
 
   cluster_config {
     dedicated_master_enabled = false

@@ -53,12 +53,13 @@ data "aws_iam_policy_document" "worker_autoscaling" {
 }
 
 resource "helm_release" "cluster_autoscaler" {
-  chart         = "cluster-autoscaler"
-  repository    = "https://kubernetes.github.io/autoscaler"
-  name          = "cluster-autoscaler"
-  version       = var.chart_version
-  namespace     = var.namespace
-  recreate_pods = true
+  chart            = "cluster-autoscaler"
+  repository       = "https://kubernetes.github.io/autoscaler"
+  name             = "cluster-autoscaler"
+  version          = var.chart_version
+  namespace        = var.namespace
+  create_namespace = true
+  recreate_pods    = true
 
   values = [
     templatefile("${path.module}/helm-values/cluster-autoscaler.yaml", {

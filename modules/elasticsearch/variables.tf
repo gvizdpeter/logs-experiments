@@ -41,3 +41,11 @@ variable "elasticsearch_exporter_chart_version" {
   type    = string
   default = "4.7.0"
 }
+
+variable "aws_region" {
+  type = string
+}
+
+variable "account_id" {
+  type = string
+}

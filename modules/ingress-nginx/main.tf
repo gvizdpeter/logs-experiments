@@ -8,7 +8,7 @@ resource "helm_release" "ingress_nginx" {
   recreate_pods    = true
 
   values = [
-    templatefile("${path.module}/helm-values/ingress-nginx.yamlx", {
+    templatefile("${path.module}/helm-values/ingress-nginx.yaml", {
       ingess_class_name     = var.ingress_class_name
       logstash_namespace    = var.logstash_namespace
       logstash_service_name = var.logstash_service_name

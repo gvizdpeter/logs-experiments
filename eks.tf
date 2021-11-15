@@ -20,7 +20,8 @@ module "eks" {
       min_capacity     = 3
       disk_size        = 20
 
-      instance_types  = ["t3.medium"]
+      instance_types  = ["c5.xlarge"]
+
       k8s_labels      = local.aws_tags
       additional_tags = local.aws_tags
     }

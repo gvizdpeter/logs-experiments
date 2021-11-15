@@ -45,23 +45,7 @@ graylog:
     ## If true, Graylog will create/use a Persistent Volume Claim
     ## If false, use emptyDir
     ##
-    enabled: true
-    ## Graylog data Persistent Volume access modes
-    ## Must match those of existing PV or dynamic provisioner
-    ## Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-    ##
-    accessMode: ReadWriteOnce
-    ## Graylog data Persistent Volume size
-    ##
-    size: "${graylog_storage_size_gi}Gi"
-    ## Graylog data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    storageClass: "${storage_class}"
+    enabled: false
 
   ## Additional input ports for receiving logs from servers
   ## Note: Name must be in IANA_SVC_NAME (at most 15 characters, matching regex [a-z0-9]([a-z0-9-]*[a-z0-9])* and it must contains at least one letter [a-z], hyphens cannot be adjacent to other hyphens)
@@ -133,7 +117,8 @@ graylog:
 mongodb:
   architecture: "replicaset"
   useStatefulSet: true
-  replicaCount: 1
+  podAntiAffinityPreset: soft
+  replicaCount: 2
   auth:
     enabled: false
   persistence:

@@ -9,3 +9,5 @@ Terraform resources must be created by targeting `terraform apply -target=`:
 2. `module.eks`
 3. `module.cilium`
 4. `module.elasticsearch`
+
+Then `terraform apply` without target can be used

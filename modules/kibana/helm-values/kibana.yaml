@@ -16,3 +16,11 @@ kibanaConfig:
     elasticsearch:
       username: $${ELASTICSEARCH_USERNAME}
       password: $${ELASTICSEARCH_PASSWORD}
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "1000m"
+    memory: "2Gi"

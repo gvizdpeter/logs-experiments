@@ -5,5 +5,5 @@ module "cluster_autoscaler" {
   eks_name             = local.eks_name
   namespace            = "cluster-autoscaler"
   worker_iam_role_name = module.eks.worker_iam_role_name
-  aws_region           = var.aws_region
+  aws_region           = data.aws_region.current.name
 }

@@ -6,12 +6,13 @@ controller:
     enabled: true
 
   service:
+    enableHttp: false
+    enableHttps: true
+
     ports:
-      http: 80
       https: 443
 
     targetPorts:
-      http: http
       https: http
 
     annotations:
@@ -22,7 +23,6 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
       service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "${acm_certificate_arn}"
       service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
   ingressClassResource:
     name: ${ingess_class_name}

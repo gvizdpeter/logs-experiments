@@ -30,7 +30,7 @@ variable "namespace" {
 
 variable "chart_version" {
   type    = string
-  default = "2.2.0"
+  default = "1.8.10"
 }
 
 variable "graylog_replicas" {

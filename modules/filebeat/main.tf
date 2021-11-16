@@ -9,7 +9,7 @@ resource "helm_release" "filebeat" {
 
   values = [
     templatefile("${path.module}/helm-values/filebeat.yaml", {
-      logstash_beats_address  = "${var.logstash_service_name}.${var.logstash_namespace}:${var.logstash_beats_port}"
+      logstash_beats_address  = "\"${var.logstash_service_name}.${var.logstash_namespace}:${var.logstash_beats_port}\""
       graylog_beats_addresses = join(", ", local.graylog_beats_services)
     })
   ]

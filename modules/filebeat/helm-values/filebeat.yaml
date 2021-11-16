@@ -12,7 +12,6 @@ filebeatConfig:
               logs_path: "/var/log/containers/"
 
     output.logstash:
-      hosts: ["${logstash_beats_address}"]
-      # hosts: [${graylog_beats_addresses}]
+      hosts: [${logstash_beats_address}, ${graylog_beats_addresses}]
       loadbalance: true
       worker: 3

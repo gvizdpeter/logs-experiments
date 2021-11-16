@@ -10,7 +10,7 @@ resource "helm_release" "prometheus" {
   values = [
     templatefile("${path.module}/helm-values/prometheus.yaml", {
       storage_class      = var.storage_class
-      prometheus_host    = var.prometheus_host
+      prometheus_host    = "${var.subdomain}.${var.zone_name}"
       ingress_class      = var.ingress_class
       storage_size_in_gi = 1
     })
@@ -35,4 +35,11 @@ resource "helm_release" "prometheus_adapter" {
   depends_on = [
     helm_release.prometheus,
   ]
+}
+
+module "prometheus_cname_record" {
+  source    = "../zone-cname-record"
+  subdomain = var.subdomain
+  zone_id   = var.zone_id
+  zone_name = var.zone_name
 }

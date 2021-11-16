@@ -4,10 +4,11 @@ module "graylog" {
   elasticsearch_address  = module.elasticsearch.elasticsearch_address
   elasticsearch_password = module.elasticsearch.elasticsearch_password
   elasticsearch_username = module.elasticsearch.elasticsearch_username
-  graylog_host           = "graylog.${data.aws_route53_zone.primary.name}"
   ingress_class          = local.ingress_class_name
   namespace              = "graylog"
   storage_class          = "gp2"
+  zone_id                = data.aws_route53_zone.primary.zone_id
+  zone_name              = data.aws_route53_zone.primary.name
 }
 
 module "graylog_provisioning" {

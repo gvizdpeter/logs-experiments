@@ -32,3 +32,10 @@ resource "helm_release" "logstash" {
     })
   ]
 }
+
+module "logstash_cname_record" {
+  source    = "../zone-cname-record"
+  subdomain = var.subdomain
+  zone_id   = var.zone_id
+  zone_name = var.zone_name
+}

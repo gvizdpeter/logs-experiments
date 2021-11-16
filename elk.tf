@@ -26,15 +26,18 @@ module "logstash" {
   elasticsearch_username = module.elasticsearch.elasticsearch_username
   elasticsearch_password = module.elasticsearch.elasticsearch_password
   namespace              = "logstash"
+  zone_id                = data.aws_route53_zone.primary.zone_id
+  zone_name              = data.aws_route53_zone.primary.name
 }
 
 module "kibana" {
   source = "./modules/kibana"
 
-  kibana_host            = "kibana.${data.aws_route53_zone.primary.name}"
   ingress_class          = module.ingress_nginx.ingress_class
   elasticsearch_address  = module.elasticsearch.elasticsearch_address
   elasticsearch_username = module.elasticsearch.elasticsearch_username
   elasticsearch_password = module.elasticsearch.elasticsearch_password
   namespace              = "kibana"
+  zone_id                = data.aws_route53_zone.primary.zone_id
+  zone_name              = data.aws_route53_zone.primary.name
 }

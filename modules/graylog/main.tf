@@ -70,7 +70,7 @@ resource "helm_release" "graylog" {
       elasticsearch_address        = var.elasticsearch_address
       storage_class                = var.storage_class
       beats_port                   = local.beats_port
-      graylog_host                 = var.graylog_host
+      graylog_host                 = local.graylog_host
       ingress_class                = var.ingress_class
       elasticsearch_version        = "7"
       elasticsearch_uri_secret     = kubernetes_secret.elasticsearch_uri.metadata[0].name
@@ -96,4 +96,11 @@ resource "kubectl_manifest" "graylog_beats_service" {
   depends_on = [
     helm_release.graylog,
   ]
+}
+
+module "graylog_cname_record" {
+  source    = "../zone-cname-record"
+  subdomain = var.subdomain
+  zone_id   = var.zone_id
+  zone_name = var.zone_name
 }

@@ -6,8 +6,9 @@ variable "namespace" {
   type = string
 }
 
-variable "prometheus_host" {
-  type = string
+variable "subdomain" {
+  type    = string
+  default = "prometheus"
 }
 
 variable "ingress_class" {
@@ -22,4 +23,12 @@ variable "prometheus_chart_version" {
 variable "prometheus_adapter_chart_version" {
   type    = string
   default = "3.0.0"
+}
+
+variable "zone_id" {
+  type = string
+}
+
+variable "zone_name" {
+  type = string
 }

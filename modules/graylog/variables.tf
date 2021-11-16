@@ -2,8 +2,9 @@ variable "storage_class" {
   type = string
 }
 
-variable "graylog_host" {
-  type = string
+variable "subdomain" {
+  type    = string
+  default = "graylog"
 }
 
 variable "ingress_class" {
@@ -36,4 +37,12 @@ variable "chart_version" {
 variable "graylog_replicas" {
   type    = number
   default = 3
+}
+
+variable "zone_id" {
+  type = string
+}
+
+variable "zone_name" {
+  type = string
 }

@@ -33,7 +33,7 @@ data "aws_lb" "eks_ingress_lb" {
 
 resource "aws_route53_record" "wildcard_record_primary_zone" {
   zone_id = var.zone_id
-  name    = "*.${var.zone_name}"
+  name    = var.zone_name
   type    = "A"
 
   alias {

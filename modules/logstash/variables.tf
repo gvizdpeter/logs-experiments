@@ -20,3 +20,16 @@ variable "chart_version" {
   type    = string
   default = "7.10.2"
 }
+
+variable "zone_id" {
+  type = string
+}
+
+variable "zone_name" {
+  type = string
+}
+
+variable "subdomain" {
+  type    = string
+  default = "logstash"
+}

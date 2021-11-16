@@ -36,11 +36,18 @@ resource "kubectl_manifest" "kibana_ingress" {
   yaml_body = templatefile("${path.module}/k8s-manifests/ingress.yaml", {
     ingress_class  = var.ingress_class
     namespace      = kubernetes_namespace.kibana.metadata[0].name
-    kibana_host    = var.kibana_host
+    kibana_host    = local.kibana_host
     kibana_service = local.kibana_service
     kibana_port    = local.kibana_port
   })
   depends_on = [
     helm_release.kibana,
   ]
+}
+
+module "kibana_cname_record" {
+  source    = "../zone-cname-record"
+  subdomain = var.subdomain
+  zone_id   = var.zone_id
+  zone_name = var.zone_name
 }

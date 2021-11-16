@@ -1,5 +1,5 @@
 output "kibana_url" {
-  value = "http://${var.kibana_host}"
+  value = "http://${local.kibana_host}"
   depends_on = [
     kubectl_manifest.kibana_ingress,
   ]

@@ -24,7 +24,7 @@ output "beats_port" {
 }
 
 output "graylog_host" {
-  value = var.graylog_host
+  value = local.graylog_host
   depends_on = [
     helm_release.graylog,
   ]

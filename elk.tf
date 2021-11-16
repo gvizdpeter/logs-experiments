@@ -7,6 +7,10 @@ module "filebeat" {
   graylog_beats_port     = module.graylog.beats_port
   graylog_namespace      = module.graylog.graylog_namespace
   graylog_beats_services = module.graylog.graylog_beats_services
+
+  depends_on = [
+    module.graylog_provisioning,
+  ]
 }
 
 module "elasticsearch" {

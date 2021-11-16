@@ -14,4 +14,4 @@ filebeatConfig:
     output.logstash:
       hosts: [${logstash_beats_address}, ${graylog_beats_addresses}]
       loadbalance: true
-      worker: 3
+      worker: 1

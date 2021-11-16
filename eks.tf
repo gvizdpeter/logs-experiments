@@ -23,7 +23,12 @@ module "eks" {
       instance_types = ["c5.xlarge"]
 
       k8s_labels      = local.aws_tags
-      additional_tags = local.aws_tags
+      additional_tags = merge(
+        local.aws_tags, {
+          "k8s.io/cluster-autoscaler/${local.eks_name}": "owned",
+          "k8s.io/cluster-autoscaler/enabled": "true"
+        }
+      )
     }
   }
 }
